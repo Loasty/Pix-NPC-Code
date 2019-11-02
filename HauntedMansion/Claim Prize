@@ -1,0 +1,58 @@
+function init(event){
+    event.block.setModel( 'pixelmon:poke_ball');
+    event.block.setLight(15);
+    event.block.setRotation(0,180,0);
+}
+
+function interact(event){
+    var test = event.player.hasReadDialog(153)
+    var chest1 = event.player.hasReadDialog(154)
+    var chest2 = event.player.hasReadDialog(155)
+    var chest3 = event.player.hasReadDialog(156)
+    var chest4 = event.player.hasReadDialog(157)
+    var chest5 = event.player.hasReadDialog(158)
+    var chest6 = event.player.hasReadDialog(159)
+    var chest7 = event.player.hasReadDialog(160)
+    
+    var dummy = event.player.world.createEntity('customnpcs:customnpc');
+    var player = event.player.getDisplayName()
+    
+        if(test == true){
+            var cmd = ("title "+player+" subtitle {\"text\":\"You have already claimed the reward!\"}")
+            dummy.setName("HauntedMansion");
+            dummy.executeCommand(cmd);
+            dummy.executeCommand("title "+player+" reset");
+            event.player.removeItem("variedcommodities:key2", -1, 1)
+            event.player.removeItem("variedcommodities:key", -1, 8)
+         }
+        if(test == false){
+            var cmd = ("title "+player+" subtitle {\"text\":\"You have just recieved a halloween eevee!\"}")
+            dummy.setName("HauntedMansion");
+            dummy.executeCommand(cmd);
+            dummy.executeCommand("title "+player+" reset");
+            dummy.executeCommand("noppes dialog read "+player+" 153");
+            event.block.executeCommand("pokegive "+player+" eevee special:1");
+            dummy.executeCommand("ci "+player);
+            if(chest1 == true){
+                event.block.executeCommand("give "+player+" minecraft:experience_bottle 32");
+            }
+            if(chest2 == true){
+                event.block.executeCommand("give "+player+" pixelmon:rare_candy 16");
+            }
+            if(chest3 == true){
+                event.block.executeCommand("give "+player+" pixelmon:ranch_upgrade 4");
+            }
+            if(chest4 == true){
+                event.block.executeCommand("give "+player+" pixelmon:park_ball 1");
+            }
+            if(chest5 == true){
+                event.block.executeCommand("give "+player+" pixelmon:hourglass_gold 32");
+            }
+            if(chest6 == true){
+                event.block.executeCommand("give "+player+" pixelmon:legend_finder 3");
+            }
+            if(chest7 == true){
+                event.block.executeCommand("give "+player+" pixelmon:master_ball 1");
+            }    
+        }
+}
