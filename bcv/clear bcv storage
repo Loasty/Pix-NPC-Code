@@ -1,0 +1,4 @@
+function interact(event){
+var bcvarray=[{xcord: "0", ycord: "0", zcord: "0"}]
+    event.npc.world.getStoreddata().put("bcvarray1", JSON.stringify(bcvarray));
+}
