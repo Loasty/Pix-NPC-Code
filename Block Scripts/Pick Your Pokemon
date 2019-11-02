@@ -1,0 +1,20 @@
+function init(event){
+    event.block.setModel( 'pixelmon:poke_ball');
+    event.block.setLight(15);
+    event.block.setRotation(0,90,0);
+}
+
+function interact(event){
+    var test = event.player.hasReadDialog(81)
+    var player = event.player.getDisplayName()
+        if(test == true){
+            var dummy = event.player.world.createEntity('customnpcs:customnpc');
+            var cmd = ("title "+player+" subtitle {\"text\":\"You have already chosen a pokemon!\"}")
+             dummy.setName("PYP");
+             dummy.executeCommand(cmd);
+             dummy.executeCommand("title "+player+" reset");
+         }
+        if(test == false){
+            event.block.executeCommand("noppes dialog show "+player+" 82 Notoak");
+        }
+}
