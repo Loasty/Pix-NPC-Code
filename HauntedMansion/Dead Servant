@@ -1,0 +1,23 @@
+    var itemmodel = "variedcommodities:gem_amethyst";
+    var itemname = "Gem";
+    var stepcheck = "125";
+
+function interact(event){   
+    var test = event.player.hasReadDialog(stepcheck)
+    var player = event.player.getDisplayName()
+        if(test == true){
+            var dummy = event.player.world.createEntity('customnpcs:customnpc');
+            var cmd = ("title "+player+" subtitle {\"text\":\"You have already collected the gem! Don't keep touching it!\"}")
+             dummy.setName("Event");
+             dummy.executeCommand(cmd);
+             dummy.executeCommand("title "+player+" reset");
+         }
+        if(test == false){
+            event.player.addDialog(stepcheck)
+            var dummy = event.player.world.createEntity('customnpcs:customnpc');
+            var cmd = ("title "+player+" subtitle {\"text\":\"You notice a gem in the servant's hand, you decide to take it.\"}")
+            dummy.executeCommand(cmd);
+            dummy.executeCommand("title "+player+" reset");
+            event.npc.executeCommand("give "+player+" "+itemmodel+" 1 0 {display:{Name:\""+itemname+"\"}}");
+        }
+}
