@@ -1,0 +1,9 @@
+function interact(event){
+    var bcvarray = JSON.parse(event.npc.world.getStoreddata().get("bcvarray1"));
+    var bcvnumber = (bcvarray.length);
+    //var location = bcvarray[bcvnumber]
+    for (var i = 0; i < bcvnumber; i++) {
+        var location = bcvarray[i]
+        event.player.message(location.xcord+", "+location.ycord+", "+location.zcord+", "+location.code);
+  }
+}
