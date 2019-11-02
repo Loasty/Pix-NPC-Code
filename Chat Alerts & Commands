@@ -1,0 +1,213 @@
+function chat(event){
+    var check = event.message;
+    var checkconvert = check.toLowerCase();
+    var arraycheck =  checkconvert.split(' ');
+    
+    event.player.world.getStoreddata().put("message",checkconvert);
+    
+    var alertwords = ["jmod","mod", "manager", "admin", "help", "xray", "pokeradar", "radar", "fuck", "penis", "vagina", "rape", "ass", "sex", "tits", "boobs", "sext"];
+    var daily = ["#daily"];
+    var test = ["#1asd"];
+    var relog = ["#1asdrl"];
+    var scoreboard = ["#scoreboard"];
+    var halloween = ["#halloween"];
+    var contest = ["#contest"];
+    var submit = ["#submit"];
+
+    var i;
+    
+    for (i = 0; i <halloween.length; i++){
+        if(arraycheck.indexOf(halloween[i]) >= 0){
+            event.player.timers.forceStart(90, 10, false);
+            break;
+        }
+    }
+    for (i = 0; i <contest.length; i++){
+        if(arraycheck.indexOf(contest[i]) >= 0){
+            event.player.timers.forceStart(91, 10, false);
+            break;
+        }
+    }
+    for (i = 0; i <submit.length; i++){
+        if(arraycheck.indexOf(submit[i]) >= 0){
+            event.player.timers.forceStart(92, 10, false);
+            break;
+        }
+    }
+    
+    for (i = 0; i <alertwords.length; i++){
+        if(arraycheck.indexOf(alertwords[i]) >= 0){
+            var word = alertwords[i]
+            var dummy = event.player.world.createEntity('customnpcs:customnpc');
+            var user = event.player.getDisplayName();
+            dummy.setName("ChatAlert");
+            dummy.setPosition(event.player.x,event.player.y,event.player.z);
+            dummy.executeCommand("alert &e[Chat] User: &f"+user+" &bsaid: &f"+word);
+            break;
+        }
+    }
+    for (i = 0; i <daily.length; i++){
+        if(arraycheck.indexOf(daily[i]) >= 0){
+                event.player.timers.forceStart(100, 10, false);
+            break;
+        }
+    }
+    for (i = 0; i <test.length; i++){
+        if(arraycheck.indexOf(test[i]) >= 0){
+            var dummy = event.player.world.createEntity('customnpcs:customnpc');
+            var user = event.player.getDisplayName();
+            dummy.setName("ChatResponse");
+            dummy.setPosition(event.player.x,event.player.y,event.player.z);
+            
+            var playerdata = JSON.parse(event.player.world.storeddata.get(event.player.UUID))
+            
+            var world1 = event.API.getIWorld('2');
+            var worldTime = world1.getTotalTime();
+            if(playerdata) {} else {playerdata = {login:0, daily:0}}
+            var checkTime = playerdata.login;
+            var overdaily = (worldTime - 3456000);
+            var player = event.player.getDisplayName();
+            var minusTime = (worldTime - 1728000);
+            
+            dummy.executeCommand("alert testing data pull:"+playerdata.login+" "+playerdata.daily);
+            dummy.executeCommand("alert daily time was: "+playerdata.login);
+            
+            playerdata.login = minusTime
+            //playerdata.login = overdaily
+            //playerdata.daily = playerdata.daily+1
+            playerdata.daily = 36
+            
+            dummy.executeCommand("alert daily time is now: "+playerdata.login);
+            dummy.executeCommand("alert testing data pull:"+playerdata.login+" "+playerdata.daily);
+            event.player.world.storeddata.put(event.player.UUID, JSON.stringify(playerdata));
+            break;
+        }
+    }
+    for (i = 0; i <relog.length; i++){
+        if(arraycheck.indexOf(relog[i]) >= 0){
+    /*
+    {login: timestamp, daily: timestamp2}
+    */
+    var dummy = event.player.world.createEntity('customnpcs:customnpc');
+    dummy.setName("DailyLogin");
+    var world1 = event.API.getIWorld('2');
+    var worldTime = world1.getTotalTime();
+    var playerdata = JSON.parse(event.player.world.storeddata.get(event.player.UUID))
+    if(playerdata) {} else {playerdata = {login:0, daily:0}}
+    var checkTime = playerdata.login;
+    var overdaily = (playerdata.login + 3456000);
+    var player = event.player.getDisplayName();
+    
+    if(worldTime > checkTime){
+        if(worldTime < overdaily){
+            var daily = playerdata.daily
+            var addTime = (worldTime + 1728000);
+            var dailyRewards = [
+            {timer:101, command:"give "+player+" pixelmon:rare_candy 1"},
+            {timer:102, command:"give "+player+" pixelmon:rare_candy 2"},
+            {timer:103, command:"give "+player+" pixelmon:rare_candy 3"},
+            {timer:104, command:"give "+player+" pixelmon:rare_candy 4"},
+            {timer:105, command:"give "+player+" pixelmon:rare_candy 5"}
+            ];
+            var reward = daily;
+            if (daily >= dailyRewards.length) {
+                daily = (dailyRewards.length - 1);
+                /*use last tier reward*/
+                event.player.timers.forceStart(dailyRewards[daily].timer, 100, false);
+                dummy.executeCommand(dailyRewards[daily].command);
+            } else if (daily < dailyRewards.length){
+                daily = playerdata.daily
+                event.player.timers.forceStart(dailyRewards[daily].timer, 100, false);
+                dummy.executeCommand(dailyRewards[daily].command);
+            }
+            daily = reward;
+            playerdata.daily = (daily + 1);
+            playerdata.login = addTime;
+        }
+        
+        if(worldTime > overdaily){
+            playerdata.daily = 0
+            var daily = (playerdata.daily + 1);
+            var addTime = (worldTime + 1728000);
+        
+            if (daily == 1){
+                event.player.timers.forceStart(99, 100, false);
+                dummy.executeCommand("give "+player+" pixelmon:rare_candy 1");
+            }
+            playerdata.daily = daily
+            playerdata.login = addTime
+        
+        }
+        event.player.world.storeddata.put(event.player.UUID, JSON.stringify(playerdata));
+    }
+    if(worldTime < checkTime){
+        event.player.timers.forceStart(98, 100, false);
+    }
+            break;
+        }
+    }
+    for (i = 0; i <scoreboard.length; i++){
+        if(arraycheck.indexOf(scoreboard[i]) >= 0){
+            var dummy = event.player.world.createEntity('customnpcs:customnpc');
+            var user = event.player.getDisplayName();
+            dummy.setName("scoreboard");
+            dummy.setPosition(event.player.x,event.player.y,event.player.z);
+            var scoreboard = event.player.world.getScoreboard()
+            var ivy = event.player.factionStatus(4);
+            var blaze = event.player.factionStatus(5);
+            var hydro = event.player.factionStatus(6);
+            
+            if(scoreboard.getPlayerTeam(user).getName() == "colour-darkgreen" || scoreboard.getPlayerTeam(user).getName() == "colour-red" || scoreboard.getPlayerTeam(user).getName() == "colour-aqua") {
+                dummy.executeCommand("scoreboard teams join colour-white "+user);
+            }
+            else if(scoreboard.getPlayerTeam(user).getName() == "colour-white"){
+                if(ivy==1){
+                    dummy.executeCommand("scoreboard teams join colour-darkgreen "+user);
+                }
+                if(blaze==1){
+                    dummy.executeCommand("scoreboard teams join colour-red "+user);
+               }
+                if(hydro==1){
+                    dummy.executeCommand("scoreboard teams join colour-aqua "+user);
+                }
+            }
+            break;
+        }
+    }
+}
+
+function timer(event){
+    var player = event.player.getDisplayName();
+    var playerdata = JSON.parse(event.player.world.storeddata.get(event.player.UUID))
+
+    if(event.id==100){
+        event.player.message("&bDaily log in streak: "+playerdata.daily);
+        var checktime = playerdata.login;
+        var world1 = event.API.getIWorld('2');
+        var worldtime = world1.getTotalTime();
+        
+        var ticks = (checktime - worldtime);
+        if(ticks > 0){
+        //get seconds from ticks
+        var ts = ticks / 20;
+
+        //conversion based on seconds
+        var hh = Math.floor( ts / 3600);
+        var mm = Math.floor( (ts % 3600) / 60);
+        var ss = (ts % 3600) % 60;
+
+        //prepend '0' when needed
+        hh = hh < 10 ? '0' + hh : hh;
+        mm = mm < 10 ? '0' + mm : mm;
+        ss = ss < 10 ? '0' + ss : ss;
+        
+        ss = Math.round(ss);
+        //use it
+        var str = hh + ":" + mm + ":" + ss;
+        event.player.message("&bTime till next daily: "+str);
+        }
+        else {
+        event.player.message("&bTime to relog!");
+        }     
+    }
+}
