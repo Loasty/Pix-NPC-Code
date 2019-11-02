@@ -1,0 +1,104 @@
+/*  */
+
+var damageRange = [333,334,335,336,337,338]
+
+function init(event) {
+
+    event.item.setTexture(333, 'variedcommodities:element_air');
+
+    event.item.setTexture(334, 'variedcommodities:element_fire');
+
+    event.item.setTexture(335, 'variedcommodities:element_water');
+
+    event.item.setTexture(336, 'variedcommodities:element_earth');
+
+    event.item.setTexture(337, 'variedcommodities:spell_lightning');
+    
+    event.item.setTexture(338, 'minecraft:barrier');
+    
+    event.item.setLore(["Air: Slow Fall", "Fire: Lava Resistance", "Water: Water Breathing", "Earth: Spider Climbing", "Lightning: Jump Boost 3", "Barrier: Disabled"," ",  "Left click to change ability"]);
+    event.item.setMaxStackSize(1);
+    event.item.setCustomName("§f[§7Elemental §fT§cw§bi§as§et§f] §5#evh");
+
+     event.item.setDurabilityShow(false);
+
+    if(damageRange.indexOf(event.item.itemDamage) == -1) {event.item.setItemDamage(333)};
+
+}
+
+
+function tick(event) {
+
+var d_number = damageRange.indexOf(event.item.itemDamage);
+
+switch (d_number) {
+
+case 0:
+
+event.player.addPotionEffect(67, 1, 1, false);
+break;
+
+case 1:
+
+event.player.addPotionEffect(12, 1, 1, false);
+break;
+
+case 2:
+
+event.player.addPotionEffect(13, 1, 1, false);
+break;
+
+case 3:
+
+event.player.addPotionEffect(48, 1, 1, false);
+break;
+
+case 4:
+
+event.player.addPotionEffect(8, 1, 3, false);
+break;
+
+case 5:
+
+break;
+
+}
+
+}
+
+function attack(event) {
+
+var d_number = damageRange.indexOf(event.item.itemDamage);
+switch (d_number) {
+case 4:
+event.player.message("&e[Elemental Twist] &fDisabled!");
+break;
+case 5:
+event.player.message("&e[Elemental Twist] &fActivated &bSlow Fall&f");
+break;
+case 0:
+event.player.message("&e[Elemental Twist] &fActivated &bLava Resist&f!");
+break;
+case 1:
+event.player.message("&e[Elemental Twist] &fActivated &bWater Breath&f!");
+break;
+case 2:
+event.player.message("&e[Elemental Twist] &fActivated &bSpider Climb&f!");
+break;
+case 3:
+event.player.message("&e[Elemental Twist] &fActivated &bLightning Jump&f!");
+break;
+}
+
+    if(event.item.itemDamage >= damageRange[damageRange.length-1]) {
+
+        event.item.setItemDamage(damageRange[0])
+
+    } else {
+
+        event.item.setItemDamage(event.item.getItemDamage() + 1)
+
+    }
+
+}
+
