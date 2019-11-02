@@ -1,0 +1,13 @@
+function init(event) {
+  event.block.setBlockModel("minecraft:spruce_door");
+}
+
+function interact(event) {
+    event.block.timers.forceStart(1,60,false);
+}
+
+function timer(event) {
+    if (event.id ==1){
+    event.block.setOpen(false);
+    }
+}
