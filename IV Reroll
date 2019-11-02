@@ -1,0 +1,40 @@
+function init(event) {
+    event.item.setItemDamage(1400);
+    event.item.setTexture(1400,"pixelmon:ability_capsule");
+    event.item.setTexture(1401,"pixelmon:ability_capsule");
+    event.item.setLore(["Left click to deactivate your capsule", "Right click to allow the capsule to be used", "Right click to RANDOMLY reroll ALL the IVs of your slot 1 pokemon", "This DOES NOT guarantee 31 ivs on Legendary Pokemon"]);
+    event.item.setMaxStackSize(1);
+    event.item.setCustomName("IV Capsule");
+    event.item.setDurabilityShow(false);
+}
+
+function attack(event) {
+    event.item.setItemDamage(1400);
+    event.player.message("&e[IV Capsule] &fYour capsule is deactivated.");    
+}
+
+function interact(event) {
+    var check = event.item.getItemDamage();
+    if (check == 1400) {
+        event.player.message("&e[IV Capsule] &fYour capsule is now Active, Right click again to use!");
+        event.item.setItemDamage(1401)
+    }
+
+    if (check ==1401) {
+        var dummy = event.player.world.createEntity('customnpcs:customnpc');
+        dummy.setName("ivtoken");
+        var user = event.player.getDisplayName();
+        dummy.setPosition(event.player.x,event.player.y,event.player.z);
+    
+        var ivhp = Math.round(Math.floor(Math.random() * Math.floor(32)))
+        var ivatk = Math.round(Math.floor(Math.random() * Math.floor(32)))
+        var ivdef = Math.round(Math.floor(Math.random() * Math.floor(32)))
+        var ivspatk = Math.round(Math.floor(Math.random() * Math.floor(32)))
+        var ivspdef = Math.round(Math.floor(Math.random() * Math.floor(32)))
+        var ivspd = Math.round(Math.floor(Math.random() * Math.floor(32)))
+    
+        dummy.executeCommand("pokeedit "+user+" 1 resetivs");
+        dummy.executeCommand("pokeedit "+user+" 1"+" ivhp:"+ivhp+" ivattack:"+ivatk+" ivdefence:"+ivdef+" ivspecialattack:"+ivspatk+" ivspecialdefence:"+ivspdef+" ivspeed:"+ivspd);
+        event.player.setMainhandItem(event.player.world.createItem('minecraft:air', 0, 1))
+    }
+}
