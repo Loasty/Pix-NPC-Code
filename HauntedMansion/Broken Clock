@@ -1,0 +1,29 @@
+    var itemmodel = "variedcommodities:gem_amethyst";
+    var itemname = "Gem";
+    var stepcheck = "121";
+    var key_name = "Clock Hands";
+    var key_item = "variedcommodities:broken_arrow";
+    
+function init(event){
+    event.block.setModel("minecraft:clock");
+    event.block.setLight(15);
+    event.block.setRotation(0,270,0);
+}
+
+function interact(event){   
+    var test = event.player.hasReadDialog(stepcheck)
+    var player = event.player.getDisplayName()
+    var item = event.player.getMainhandItem();
+        if (test == true){
+            var dummy = event.player.world.createEntity('customnpcs:customnpc');
+            var cmd = ("title "+player+" subtitle {\"text\":\"You have already collected this Gem!\"}")
+             dummy.setName("Event");
+             dummy.executeCommand(cmd);
+             dummy.executeCommand("title "+player+" reset");
+         }
+        if(item.getDisplayName() == key_name && test == false){
+            event.player.addDialog(stepcheck)
+            event.player.removeItem(key_item, -1, 1)
+            event.block.executeCommand("give "+player+" "+itemmodel+" 1 0 {display:{Name:\""+itemname+"\"}}");
+        }
+}
