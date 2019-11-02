@@ -1,0 +1,22 @@
+function login(event){
+    var ivy = event.player.factionStatus(4);
+    var blaze = event.player.factionStatus(5);
+    var hydro = event.player.factionStatus(6);
+    var dummy = event.player.world.createEntity('customnpcs:customnpc');
+    var name = event.player.getDisplayName();
+    
+    dummy.executeCommand("fly "+name+" false")
+    
+    if(ivy==1){
+        dummy.executeCommand("scoreboard teams join colour-darkgreen "+name);
+        dummy.executeCommand("teams admin set "+name+" Ivy Member");
+    }
+    if(blaze==1){
+        dummy.executeCommand("scoreboard teams join colour-red "+name);
+        dummy.executeCommand("teams admin set "+name+" Blaze Member");
+    }
+    if(hydro==1){
+        dummy.executeCommand("scoreboard teams join colour-aqua "+name);
+        dummy.executeCommand("teams admin set "+name+" Hydro Member");
+    }
+}
