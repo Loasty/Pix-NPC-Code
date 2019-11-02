@@ -1,0 +1,43 @@
+function interact(event) {
+    var p = event.player.getDisplayName();  
+    var x = event.npc.getPos().getX();
+    var y = event.npc.getPos().getY();
+    var z = event.npc.getPos().getZ();
+    var Rewards = [
+            {id:0, command:"admin this was a holder, not supposed to be run", say:"Santa has dropped you a Tier 0 gift!"},
+            {id:1, command:"clone -152 55 233 -152 55 233 "+x+" "+y+" "+z, say:"Santa has dropped you a Tier 1 gift!"},
+            {id:2, command:"clone -153 55 233 -153 55 233 "+x+" "+y+" "+z, say:"Santa has dropped you a Tier 2 gift!"},
+            {id:3, command:"clone -154 55 233 -154 55 233 "+x+" "+y+" "+z, say:"Santa has dropped you a Tier 3 gift!"},
+            {id:4, command:"clone -155 55 233 -155 55 233 "+x+" "+y+" "+z, say:"Santa has dropped you a Tier 4 gift!"},
+            {id:5, command:"clone -156 55 233 -156 55 233 "+x+" "+y+" "+z, say:"Santa has dropped you a Tier 5 gift!"}
+            ];
+    var id = 0;
+    var r = Math.floor(Math.random() * 101);
+    if (0 <= r && r <=54){
+    id = 1
+    }
+    if (55 <= r && r <=84){
+    id = 2
+    }
+    if (85 <= r && r <=94){
+    id = 3
+    }
+    if (95 <= r && r <=99){
+    id = 4
+    }
+    if (100 <= r && r <=101){
+    id = 5
+    }
+    event.npc.executeCommand(Rewards[id].command);
+    event.npc.executeCommand("admin &2Santa gave &e"+p+"&2 a Tier "+id+" gift! Rolled: "+r);
+    //event.npc.despawn();
+}
+function init(event) {
+    //event.npc.timers.forceStart(1, 600, false)
+}
+function timer(event) {
+    if (event.id==1){
+    event.npc.executeCommand("broadcast &2Santa was ignored so he left with his gifts");
+    event.npc.despawn();
+    }
+}
