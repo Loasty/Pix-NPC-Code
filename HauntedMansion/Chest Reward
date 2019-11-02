@@ -1,0 +1,28 @@
+var stepcheck = "154";
+
+function init(event){
+    event.block.setModel("ironchest:iron_chest");
+    event.block.setLight(15);
+    event.block.setRotation(0,90,0);
+}
+
+function interact(event){   
+    var test = event.player.hasReadDialog(stepcheck)
+    var player = event.player.getDisplayName()
+        if(test == true){
+            var dummy = event.player.world.createEntity('customnpcs:customnpc');
+            var cmd = ("title "+player+" subtitle {\"text\":\"You have already collected this chest!\"}")
+             dummy.setName("Event");
+             dummy.executeCommand(cmd);
+             dummy.executeCommand("title "+player+" reset");
+         }
+        if(test == false){
+            event.player.addDialog(stepcheck)
+            var dummy = event.player.world.createEntity('customnpcs:customnpc');
+            var cmd = ("title "+player+" subtitle {\"text\":\"You collect the chest's contents.\"}")
+             dummy.setName("Event");
+             dummy.executeCommand(cmd);
+             dummy.executeCommand("title "+player+" reset");
+             event.player.message("You will get the chest rewards at the end of the event.");
+        }
+}
