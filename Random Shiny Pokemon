@@ -1,0 +1,17 @@
+// NEEDS UPDATING FOR ITEM REMOVAL ON USE
+
+function init(event){
+    event.item.setItemDamage(1);
+    event.item.setTexture(1,"pixelmon:dream_ball");
+    event.item.setDurabilityShow(false);
+    event.item.setLore(["Right click to claim your free random Shiny Pokemon"]);
+    event.item.setCustomName("Random Shiny Pokemon");
+    event.item.setMaxStackSize(1);
+}
+function interact(event){
+    var dummy = event.player.world.createEntity('customnpcs:customnpc');
+    var user = event.player.getDisplayName();
+    dummy.setPosition(event.player.x,event.player.y,event.player.z);
+    dummy.executeCommand("pokerandom "+user+" s");
+    event.item.setMaxStackSize(0);
+}
