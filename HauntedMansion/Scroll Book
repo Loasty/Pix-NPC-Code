@@ -1,0 +1,33 @@
+    var stepcheck = "148";
+    var key_name = "Ancient Scroll";
+    var key_item = "variedcommodities:ancient_scroll";
+    
+function init(event){
+    event.block.setModel("variedcommodities:book");
+    event.block.setLight(15);
+    event.block.setRotation(0,90,0);
+}
+
+function interact(event){   
+    var test = event.player.hasReadDialog(stepcheck)
+    var player = event.player.getDisplayName()
+    var item = event.player.getMainhandItem();
+        if (test == true){
+            var dummy = event.player.world.createEntity('customnpcs:customnpc');
+            var cmd = ("title "+player+" subtitle {\"text\":\"You have already inserted this Scroll!\"}")
+             dummy.setName("Event");
+             dummy.executeCommand(cmd);
+             dummy.executeCommand("title "+player+" reset");
+         }
+        if(item.getDisplayName() == key_name && test == false){
+            event.player.addDialog(stepcheck)
+            event.player.removeItem(key_item, -1, 1)
+            //event.block.executeCommand("give "+player+" "+itemmodel+" 1 0 {display:{Name:\""+itemname+"\"}}");
+        }
+        else {
+            var dummy = event.player.world.createEntity('customnpcs:customnpc');
+            var cmd = ("title "+player+" subtitle {\"text\":\"You do not have a Scroll to insert here!\"}")
+            dummy.executeCommand(cmd);
+            dummy.executeCommand("title "+player+" reset");
+        }
+}
