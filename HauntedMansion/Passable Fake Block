@@ -1,0 +1,6 @@
+function init(event){
+    event.block.setModel('chisel:cobblestone2');
+    event.block.setLight(15);
+    event.block.setRotation(0,0,0);
+    event.block.setIsPassible(true);
+}
