@@ -1,0 +1,55 @@
+var bcvstored;
+var set;
+function init(event){
+    if (set == null){
+    event.npc.setName("Please right click to activate me");
+    }
+}
+ 
+function damaged(event){
+    bcvstored = event.npc.getStoreddata().get("bcvstored")
+    var array = event.npc.world.getStoreddata().get("bcvarray1");
+    var bcvarray = JSON.parse(array)
+    
+    var x = event.npc.getPos().getX();
+    var y = event.npc.getPos().getY();
+    var z = event.npc.getPos().getZ();
+    
+    var bcvnumber = (bcvarray.length);
+    for (var i = 0; i < bcvnumber; i++) {
+        var location = bcvarray[i]
+            var xr = location.xcord
+            var yr = location.ycord
+            var zr = location.zcord
+            if (xr == x && yr == y && zr == z){
+                bcvarray.splice(i, 1);
+                break;
+            }
+    }        
+    event.npc.world.getStoreddata().put("bcvarray1", JSON.stringify(bcvarray));
+    event.npc.despawn()
+}
+
+function interact(event){
+    //reasoning
+    if (set == "1"){
+        event.player.message("You already confirmed this bcv's location, Please left click me if you wish to remove it");
+    } else {
+    var x = event.npc.getPos().getX();
+    var y = event.npc.getPos().getY();
+    var z = event.npc.getPos().getZ();
+    var location = {xcord: x, ycord: y, zcord: z};
+    
+    var array = event.npc.world.getStoreddata().get("bcvarray1");
+    var bcvarray = JSON.parse(array)
+    if (bcvarray == undefined || bcvarray == null) {bcvarray=[{xcord: "0", ycord: "0", zcord: "0"}, {xcord: x, ycord: y, zcord: z}]}
+
+    bcvstored = location
+    event.npc.getStoreddata().put("bcvstored", bcvstored)
+    
+    bcvarray[bcvarray.length] = location
+    event.npc.world.getStoreddata().put("bcvarray1", JSON.stringify(bcvarray));
+    event.npc.setName("BCV: "+location.xcord+", "+location.ycord+", "+location.zcord);
+    set = "1";
+    }
+}
