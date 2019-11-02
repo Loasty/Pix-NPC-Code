@@ -1,0 +1,38 @@
+// This script is unknown on its functionality, Storing incase its ever needed
+
+function init(event){
+    
+    event.item.setItemDamage(7);
+    event.item.setTexture(7, 'minecraft:experience_bottle');
+    event.item.setDurabilityShow(false);
+    event.item.setLore(["Right click to gain exp", "Left click to store exp", "Stored Exp: "]);
+    event.item.setCustomName("Enchanted Bottle of Keeps");
+    event.item.setMaxStackSize(1);
+}
+
+function interact(event){
+    var expget = event.player.world.getStoreddata().get("exp");
+    var currentexp = event.player.getExpLevel();
+    if(expget > 1){
+        event.player.message("you have gained "+expget+" levels");
+        event.player.setExpLevel(expget + currentexp);
+        event.player.world.getStoreddata().put("exp", 0);
+    }
+    if(expget < 1){
+        event.player.message("you do not have any stored exp levels");
+    }
+}
+
+function attack(event){
+    var expstore = event.player.getExpLevel();
+    var addexp = event.player.world.getStoreddata().get("exp");
+    var expstoretotal = expstore + addexp
+    if(expstore > 1){
+        event.player.message("you have stored "+expstore+" levels");
+        event.player.world.getStoreddata().put("exp",expstoretotal);
+        event.player.setExpLevel(0);
+    }
+    if(expstore < 1){
+        event.player.message("you do not have any levels to store");
+    }
+}
