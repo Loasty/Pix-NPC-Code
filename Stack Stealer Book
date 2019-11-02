@@ -1,3 +1,5 @@
+//NEEDS UPDATING FOR ITEM REMOVAL ON USE
+
 function init(event){
     event.item.setTexture(101, "minecraft:book");
     event.item.setItemDamage(101);
