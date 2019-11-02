@@ -1,0 +1,67 @@
+function init(event){
+    event.item.setTexture(101, "minecraft:book");
+    event.item.setItemDamage(101);
+    
+    event.item.setCustomName("Stack Stealer Book");
+    event.item.setLore(["Left click on a listed block to use", "Makes a stack of any of the following blocks:", " ", "Dirt, Grass, Stone, Cobblestone", "Sand, Gravel, Snow, Ice, Planks"]);
+    event.item.setMaxStackSize(1);
+}
+
+function attack(event){
+
+    var list = ["minecraft:dirt","minecraft:grass","minecraft:stone","minecraft:cobblestone","minecraft:sand","minecraft:gravel","minecraft:snow","minecraft:ice","minecraft:planks"];
+
+    if(event.type==2){
+        var block = event.player.world.getBlock(event.target.x,event.target.y,event.target.z).getName();
+        var meta = event.player.world.getBlock(event.target.x,event.target.y,event.target.z).getMetadata();
+        var name = event.player.getName()
+        var dummy = event.player.world.createEntity('customnpcs:customnpc');
+        dummy.setName("Mythos Stack Stealer");
+        
+        if(block==list[0]){
+            dummy.executeCommand("give "+name+" "+block+" 64 "+meta);
+            event.player.world.setBlock(event.target.x,event.target.y,event.target.z,"minecraft:air",0);
+            event.item.setStackSize(0);
+        }
+        if(block==list[1]){
+            dummy.executeCommand("give "+name+" "+block+" 64 "+meta);
+            event.player.world.setBlock(event.target.x,event.target.y,event.target.z,"minecraft:air",0);
+            event.item.setStackSize(0);
+        }
+        if(block==list[2]){
+            dummy.executeCommand("give "+name+" "+block+" 64 "+meta);
+            event.player.world.setBlock(event.target.x,event.target.y,event.target.z,"minecraft:air",0);
+            event.item.setStackSize(0);
+        }
+        if(block==list[3]){
+            dummy.executeCommand("give "+name+" "+block+" 64 "+meta);
+            event.player.world.setBlock(event.target.x,event.target.y,event.target.z,"minecraft:air",0);
+            event.item.setStackSize(0);
+        }
+        if(block==list[4]){
+            dummy.executeCommand("give "+name+" "+block+" 64 "+meta);
+            event.player.world.setBlock(event.target.x,event.target.y,event.target.z,"minecraft:air",0);
+            event.item.setStackSize(0);
+        }
+        if(block==list[5]){
+            dummy.executeCommand("give "+name+" "+block+" 64 "+meta);
+            event.player.world.setBlock(event.target.x,event.target.y,event.target.z,"minecraft:air",0);
+            event.item.setStackSize(0);
+        }
+        if(block==list[6]){
+            dummy.executeCommand("give "+name+" "+block+" 64 "+meta);
+            event.player.world.setBlock(event.target.x,event.target.y,event.target.z,"minecraft:air",0);
+            event.item.setStackSize(0);
+        }
+        if(block==list[7]){
+            dummy.executeCommand("give "+name+" "+block+" 64 "+meta);
+            event.player.world.setBlock(event.target.x,event.target.y,event.target.z,"minecraft:air",0);
+            event.item.setStackSize(0);
+        }
+        if(block==list[8]){
+            dummy.executeCommand("give "+name+" "+block+" 64 "+meta);
+            event.player.world.setBlock(event.target.x,event.target.y,event.target.z,"minecraft:air",0);
+            event.item.setStackSize(0);
+        }
+    }
+}
