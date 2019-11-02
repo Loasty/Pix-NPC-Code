@@ -1,0 +1,31 @@
+// Qua'an Spawning, To turn into Santa Spawning once completed
+
+/*function timer(event){
+    if (event.id==1){
+        var list = event.block.getWorld().getAllPlayers();
+        if (list.length > 0){
+            var r = Math.floor(Math.random() * list.length)
+            var pn = list[r].getDisplayName();
+            var pd = list[r].getWorld().getDimension().getId();
+            var px = list[r].getX();
+            var py = list[r].getY();
+            var pz = list[r].getZ();
+            event.block.world.spawnClone(px, py, pz, 9, "Qua'an");
+            event.block.executeCommand("broadcast &eQua'an the ghost has spawned on &a"+pn+"&e! Hurry and defeat him!");
+        } 
+    }
+}
+function interact(event){
+    event.block.timers.forceStart(1, 72000, true)
+    event.player.message("timer started")
+        var list = event.block.getWorld().getAllPlayers();
+        var r = Math.floor(Math.random() * list.length)
+        var pn = list[r].getDisplayName();
+        var px = list[r].getX();
+        var py = list[r].getY();
+        var pz = list[r].getZ();
+        event.player.message(pn);
+        event.player.message("x = "+ px +"y =" + py + "z = " + pz )
+        event.block.world.spawnClone(px, py, pz, 9, "Qua'an");
+        event.block.executeCommand("broadcast &eQua'an the ghost has spawned on &a"+pn+"&e! Hurry and defeat him!");
+}*/
