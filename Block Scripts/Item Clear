@@ -1,0 +1,109 @@
+function tick(event){
+    var world1 = event.API.getIWorld('2');
+    var world2 = event.API.getIWorld('3');
+    var world3 = event.API.getIWorld('4');
+    var time = (event.API.getIWorld('2').getTime() % 13200);
+    var dummy = event.block.world.createEntity('customnpcs:customnpc');
+    dummy.setName("ClearLag");
+    var i = 0
+    
+        var item1 = world1.getAllEntities(6);
+        var item2 = world2.getAllEntities(6);
+        var item3 = world3.getAllEntities(6);
+        
+        if (item1.length > 1500 || item2.length > 1500 || item3.length > 1500){
+        var clearitem1 = 0;
+        var item1 = world1.getAllEntities(6);
+        for(i = 0; i <item1.length; i++){
+                item1[i].kill()
+                clearitem1++;
+        }
+        var clearitem2 = 0;
+        var item2 = world2.getAllEntities(6);
+        for(i = 0; i <item2.length; i++){
+                item2[i].kill()
+                clearitem2++;
+        }
+        var clearitem3 = 0;
+        var item3 = world3.getAllEntities(6);
+        for(i = 0; i <item3.length; i++){
+                item3[i].kill()
+                clearitem3++;
+        }
+        dummy.executeCommand('broadcast §e[§6ClearLag§e] Removed §6'+clearitem1+'§r W1 Items, §6'+clearitem2+'§r W2 Items, §6'+clearitem3+'§r W3 Items. Emergency removal due to: Overlimit');
+    }
+    
+    if(time>0&time<8){
+        dummy.executeCommand('broadcast §e[§6ClearLag§e] Ground items will be cleared in §660§r seconds.');
+        var item1 = world1.getAllEntities(6);
+        var item2 = world2.getAllEntities(6);
+        var item3 = world3.getAllEntities(6);
+    
+        for(i = 0; i <item1.length; i++){
+            item1[i].addTag('OD');
+        }
+        for(i = 0; i <item2.length; i++){
+            item2[i].addTag('OD');
+        }
+        for(i = 0; i <item3.length; i++){
+            item3[i].addTag('OD');
+        }
+    }else if(time>600&time<610){
+        dummy.executeCommand('broadcast §e[§6ClearLag§e] Ground items will be cleared in §630§r seconds.');
+    }else if(time>1000&time<1010){
+        dummy.executeCommand('broadcast §e[§6ClearLag§e] Ground items will be cleared in §610§r seconds.');
+    }else if(time>1200&time<1210){
+        var clearitem1 = 0;
+        var item1 = world1.getAllEntities(6);
+        for(i = 0; i <item1.length; i++){
+            if(item1[i].getAge()>60 || item1[i].hasTag('OD')){
+                item1[i].kill()
+                clearitem1++;
+            }
+        }
+        var clearitem2 = 0;
+        var item2 = world2.getAllEntities(6);
+        for(i = 0; i <item2.length; i++){
+            if(item2[i].getAge()>60 || item2[i].hasTag('OD')){
+                item2[i].kill()
+                clearitem2++;
+            }
+        }
+        var clearitem3 = 0;
+        var item3 = world3.getAllEntities(6);
+        for(i = 0; i <item3.length; i++){
+            if(item3[i].getAge()>60 || item3[i].hasTag('OD')){
+                item3[i].kill()
+                clearitem3++;
+            }
+        }
+        dummy.executeCommand('broadcast §e[§6ClearLag§e] Removed §6'+clearitem1+'§r W1 Items, §6'+clearitem2+'§r W2 Items, §6'+clearitem3+'§r W3 Items.');
+    }
+}
+
+// The below function is only used to get the time or force an item clear if needed.
+function interact(event){
+        //var world = event.API.getIWorld(3);
+        //var clearitem = 0;
+        //var item = world.getAllEntities(6);
+        //for(i in item){
+            //if(item[i].getAge()>60 || item[i].hasTag('OD')){
+                //item[i].kill()
+                //clearitem++;
+           // }
+        //}
+       // var dummy = event.npc.world.createEntity('customnpcs:customnpc');
+        //dummy.setName("BlockAlert");
+        //dummy.executeCommand('broadcast Removed '+clearitem+' items');
+        //dummy.executeCommand('broadcast §e[§6 ClearLag §e]', '§6' + clearitem + '§r items have been cleared.');
+        var world = event.block.getWorld();
+        var spawntime = (world.getTime()% 24000);
+        var time = (event.API.getIWorld('2').getTime() % 13200);
+         var dummy = event.block.world.createEntity('customnpcs:customnpc');
+         dummy.setName("ClearLag");
+        dummy.executeCommand('admin the time is '+time);
+        dummy.executeCommand('admin the spawntime is '+spawntime);
+        //dummy.executeCommand('broadcast §e[§6 ClearLag §e]', '§6' + clearitem + '§r items have been cleared.')
+        
+        //event.npc.say(event.npc.world.getStoreddata().get("message"));
+}
