@@ -1,0 +1,13 @@
+function tick(event){
+    var isDay = event.block.getWorld().isDay()
+    if (isDay == true) {
+        event.block.setModel( 'quark:blaze_lantern');
+        event.block.setLight(15);
+        event.block.setRotation(0,0,0);
+    }
+    if (isDay == false) {
+        event.block.setModel( 'minecraft:sea_lantern');
+        event.block.setLight(15);
+        event.block.setRotation(0,0,0);
+    }
+}
