@@ -1,0 +1,28 @@
+var key_name = "Scythe Key" // change for each door
+var playerID;
+function init(event) {
+  event.block.setBlockModel("minecraft:spruce_door");
+}
+function interact(event) {
+    playerID=event.player;
+    var item = event.player.getMainhandItem();
+    if (item.getDisplayName() == key_name && !event.block.getOpen() && item.getItemName() == "Key") {
+        playerID.message('You used the "§e'+key_name+'§r" to open the door');
+        event.block.timers.start(1,1,true);
+    } else {
+        playerID.message("The door is locked, the key is shaped like a Scythe.");
+        event.setCanceled(true);
+    }
+}
+function timer(event) {
+    if (event.id==1 && playerID) {
+        if (playerID.getMainhandItem().getDisplayName() == key_name) {
+            event.block.setOpen(1);
+        } else {
+            event.block.setOpen(0);
+            event.block.timers.stop(1);
+            playerID.removeItem("variedcommodities:key2", -1, 1)
+            playerID.message("The door shuts behind you and locks itself again.");
+        }
+    }
+}
