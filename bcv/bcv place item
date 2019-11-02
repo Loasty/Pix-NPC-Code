@@ -1,0 +1,16 @@
+function init(event){
+    event.item.setItemDamage(2);
+    event.item.setTexture(2, 'variedcommodities:statuette');
+    event.item.removeEnchant("infinity");
+    event.item.setDurabilityShow(false);
+    event.item.setLore(["This item will spawn a BCV Marker for Admins to clear", "This is a one time use item"]);
+    event.item.setCustomName("BCV Marker");
+}
+
+function interact(event){
+    event.player.message("You have placed a BCV to be reviewed, an admin will handle it ASAP after expiration.");
+    var c1 = event.player.world.getClone(9, "BCV");
+    c1.setPosition(event.target.x,event.target.y+2,event.target.z);
+    c1.setHome(event.target.x,event.target.y+2,event.target.z);
+    c1.spawn();
+}
