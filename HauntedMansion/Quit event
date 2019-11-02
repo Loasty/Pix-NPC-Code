@@ -1,0 +1,43 @@
+var player;
+
+function init(event){
+    event.block.setModel("minecraft:redstone_block");
+}
+
+function interact(event){   
+    var player = event.player.getDisplayName()
+    var confirm = event.block.getTempdata().get(player+"event");
+    var dummy = event.player.world.createEntity('customnpcs:customnpc');
+    var cmd = ("title "+player+" subtitle {\"text\":\"You have lost progress on the Haunted Mansion.\"}")
+
+    if (confirm == undefined){
+        event.block.getTempdata().put(player+"event",0);
+        event.block.timers.forceStart(1, 60, false);  
+    }
+    if (confirm == 1){
+        dummy.setName("Event");
+        dummy.executeCommand(cmd);
+        dummy.executeCommand("title "+player+" reset");
+        dummy.executeCommand("ci "+player);
+        dummy.executeCommand("tppos "+player+" World1 -150 56 223");
+    
+        var i;
+        for (i = 119; i < 153; i++) {
+            event.block.executeCommand("noppes dialog unread "+player+" "+i);
+         }
+     }
+     else {
+        var dummy = event.player.world.createEntity('customnpcs:customnpc');
+        var cmd = ("title "+player+" subtitle {\"text\":\"Right click to confirm your progress reset!\"}")
+        dummy.setName("Event");
+        dummy.executeCommand(cmd);
+        dummy.executeCommand("title "+player+" reset");
+        event.block.getTempdata().put(player+"event",1);
+        event.block.timers.forceStart(1, 60, false);  
+    }
+}
+function timer(event){
+    if (event.id == 1){
+        event.block.getTempdata().put(player+"event",0);
+    }
+}
