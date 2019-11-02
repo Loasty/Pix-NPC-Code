@@ -1,0 +1,66 @@
+//Nubbun's Birthday Gift
+function damaged(event){
+    var dummy = event.player.world.createEntity('customnpcs:customnpc');
+    dummy.setName("oof");
+    var name = event.player.getDisplayName();
+    var x = event.player.getX();
+    var y = event.player.getY();
+    var z = event.player.getZ();
+    dummy.setPosition(x,y,z);
+    
+    var d = (event.player.getHealth () || event.damage);
+    var oofcheck = event.player.getStoreddata().get("oof");
+    
+    if(oofcheck == "on"){
+        if(d > 1){
+           dummy.executeCommand("playsound customnpcs:songs.oof master "+name+" "+x+" "+y+" "+z+" 5");
+           //dummy.executeCommand("noppes clone spawn oof 9 oof");
+        }
+    }
+    else if(oofcheck == "off"){
+    
+    }
+}
+
+function chat(event){
+    var check = event.message;
+    var checkconvert = check.toLowerCase();
+    var arraycheck =  checkconvert.split(' ');
+    
+    event.player.world.getStoreddata().put("message",checkconvert);
+    
+    var oofOn = ["#oof"];
+    var oofOff = ["#oofdeny"];
+    var oofCheck = ["#checkoof"];
+
+    var i;
+    
+    for (i = 0; i <oofOn.length; i++){
+        if(arraycheck.indexOf(oofOn[i]) >= 0){
+            var dummy = event.player.world.createEntity('customnpcs:customnpc');
+            var user = event.player.getDisplayName();
+            dummy.setName("ooftoggle");
+            event.player.getStoreddata().put("oof","on");
+            break;
+        }
+    }
+    for (i = 0; i <oofOff.length; i++){
+        if(arraycheck.indexOf(oofOff[i]) >= 0){
+            var dummy = event.player.world.createEntity('customnpcs:customnpc');
+            var user = event.player.getDisplayName();
+            dummy.setName("ooftoggle");
+            event.player.getStoreddata().put("oof","off");
+            break;
+        }
+    }
+    for (i = 0; i <oofCheck.length; i++){
+        if(arraycheck.indexOf(oofCheck[i]) >= 0){
+            var dummy = event.player.world.createEntity('customnpcs:customnpc');
+            var user = event.player.getDisplayName();
+            dummy.setName("ooftoggle");
+            dummy.executeCommand("alert is oof on or off? "+(event.player.getStoreddata().get("oof")));
+            break;
+        }
+    }
+}
+
