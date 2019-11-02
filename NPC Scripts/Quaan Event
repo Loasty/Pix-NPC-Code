@@ -1,0 +1,23 @@
+var count;
+function damaged(event) {
+    var p = event.source
+    if (count==undefined || count==NaN){
+       count = 0
+   } 
+   count++
+   event.npc.sayTo(p, "You hit them "+count+" time(s), Hit them again!");
+   if (count==3){
+       event.npc.executeCommand("pokegive "+event.source.getDisplayName()+" squirtle special:1");
+       event.npc.sayTo(p, "You have defeated the ghost and retrieved its Halloween Squirtle!");
+       event.npc.despawn();
+   }
+}
+function init(event) {
+    event.npc.timers.forceStart(1, 600, false)
+}
+function timer(event) {
+    if (event.id==1){
+    event.npc.executeCommand("broadcast &eThe Ghost was not defeated, and has vanished!");
+    event.npc.despawn();
+    }
+}
