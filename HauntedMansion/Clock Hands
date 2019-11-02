@@ -1,0 +1,25 @@
+    var itemmodel = "variedcommodities:broken_arrow";
+    var itemname = "Clock Hands";
+    var stepcheck = "120";
+
+function init(event){
+    event.block.setModel(itemmodel);
+    event.block.setLight(15);
+    event.block.setRotation(0,270,0);
+}
+
+function interact(event){   
+    var test = event.player.hasReadDialog(stepcheck)
+    var player = event.player.getDisplayName()
+        if(test == true){
+            var dummy = event.player.world.createEntity('customnpcs:customnpc');
+            var cmd = ("title "+player+" subtitle {\"text\":\"You have already collected this item!\"}")
+             dummy.setName("Event");
+             dummy.executeCommand(cmd);
+             dummy.executeCommand("title "+player+" reset");
+         }
+        if(test == false){
+            event.player.addDialog(stepcheck)
+            event.block.executeCommand("give "+player+" "+itemmodel+" 1 0 {display:{Name:\""+itemname+"\"}}");
+        }
+}
