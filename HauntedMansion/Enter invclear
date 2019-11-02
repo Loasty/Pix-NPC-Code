@@ -1,0 +1,40 @@
+var player;
+
+function init(event){
+    event.block.setModel("minecraft:emerald_block");
+}
+
+function interact(event){   
+    player = event.player.getDisplayName()
+    var confirm = event.block.getTempdata().get(player+"event");
+    
+    if (confirm == undefined){
+        event.block.getTempdata().put(player+"event",0);
+        event.block.timers.forceStart(1, 60, false);  
+        }
+    if (confirm == 1){
+        var dummy = event.player.world.createEntity('customnpcs:customnpc');
+        var cmd = ("title "+player+" subtitle {\"text\":\"Good luck! You must find your way out... Muhahahaha.\"}")
+        dummy.setName("Event");
+        dummy.executeCommand(cmd);
+        dummy.executeCommand("title "+player+" reset");
+        dummy.executeCommand("ci "+player);
+        dummy.executeCommand("tppos "+player+" World3 -333 27 -606");
+    }
+    else {
+        var dummy = event.player.world.createEntity('customnpcs:customnpc');
+        var cmd = ("title "+player+" subtitle {\"text\":\"This is your final warning to store items!\"}")
+        dummy.setName("Event");
+        dummy.executeCommand(cmd);
+        dummy.executeCommand("title "+player+" reset");
+        event.player.message("Please ensure you have stored all your items! Once ready please right click the block twice to enter!");
+        event.block.getTempdata().put(player+"event",1);
+        event.block.timers.forceStart(1, 60, false);  
+    }
+}
+
+function timer(event){
+    if (event.id == 1){
+        event.block.getTempdata().put(player+"event",0);
+    }
+}
