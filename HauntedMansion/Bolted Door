@@ -1,0 +1,20 @@
+var playerID;
+var stepcheck = "152";
+
+function init(event) {
+  event.block.setBlockModel("minecraft:spruce_door");
+}
+function interact(event) {
+    playerID=event.player;
+    if (!event.block.getOpen() && event.player.hasReadDialog(stepcheck)) {
+        event.block.timers.forceStart(1,60,false);
+    } else {
+        playerID.message("The door doesnt have a lock but seems to be forced shut.");
+        event.setCanceled(true);
+    }
+}
+function timer(event) {
+    if (event.id ==1){
+    event.block.setOpen(false);
+    }
+}
