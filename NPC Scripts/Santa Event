@@ -1,4 +1,4 @@
-function interact(event) {
+function interact(event) { 
     var p = event.player.getDisplayName();  
     var x = event.npc.getPos().getX();
     var y = event.npc.getPos().getY();
