@@ -1,0 +1,52 @@
+function broken(event){
+ 
+    var dummy = event.player.world.createEntity('customnpcs:customnpc');
+    var name = event.player.getName()
+    dummy.setName("PlayerScripts");
+    //dummy.executeCommand("scoreboard players add "+name+" mining 1");
+ 
+    var world = event.player.world.dimension.getId() - 1;
+    var block = event.block.getName();
+    var x = event.block.getX();
+    var y = event.block.getY();
+    var z = event.block.getZ();
+    var blockIndex = {
+        'minecraft:diamond_ore':1,
+        'minecraft:gold_ore':2
+        /*etc*/
+    }
+    if(blockIndex[block]) {
+        var id = blockIndex[block];
+        event.player.getStoreddata().put("alertX"+id,x);
+        event.player.getStoreddata().put("alertY"+id,y);
+        event.player.getStoreddata().put("alertZ"+id,z);
+        event.player.getStoreddata().put("world",world);
+        event.player.timers.forceStart(id, 100, false);  
+    }
+}
+
+function timer(event){
+    var player = event.player.getDisplayName();
+    var dummy = event.player.world.createEntity('customnpcs:customnpc');
+    var user = event.player.getDisplayName();
+    dummy.setName("BlockAlert");
+    dummy.setPosition(event.player.x,event.player.y,event.player.z);
+    /*this can be created here*/
+    //Ores
+    var IDs = [1,2] /*array of timers that trigger an alert*/
+    var blockNames = {
+        1:'Diamond Ore',
+        2:'Gold Ore'
+        /*etc*/
+    }
+    if(IDs.indexOf(event.id) != -1) {
+        var x = event.player.getStoreddata().get("alertX"+event.id);
+        var y = event.player.getStoreddata().get("alertY"+event.id);
+        var z = event.player.getStoreddata().get("alertZ"+event.id);
+        var world = event.player.getStoreddata().get("world");
+        dummy.executeCommand("alert &f &e======================");
+        dummy.executeCommand("alert &f &eUser: &f"+user+" &bBlock: &f"+blockNames[event.id]);
+        dummy.executeCommand("alert &f &dWorld: &f"+world+"&c (&f"+x+", "+y+", "+z+"&c)");
+        dummy.executeCommand("alert &f &e======================");
+    }
+}
