@@ -1,0 +1,37 @@
+function init(event) {
+    event.item.setItemDamage(1405);
+    event.item.setTexture(1405,"variedcommodities:orb");
+    event.item.setColor("#121212");
+    event.item.setTexture(1406,"variedcommodities:orb");
+    event.item.setLore(["Left click to deactivate your capsule", "Right click to allow the capsule to be used", "Right click again to RANDOMLY reroll the nature of your slot 1 pokemon"]);
+    event.item.setMaxStackSize(1);
+    event.item.setCustomName("Nature Capsule");
+    event.item.setDurabilityShow(false);
+}
+
+function attack(event) {
+    event.item.setItemDamage(1405);
+    event.player.message("&e[Nature Capsule] &fYour capsule is deactivated.");    
+}
+
+function interact(event) {
+    var check = event.item.getItemDamage();
+    if (check == 1405) {
+        event.player.message("&e[Nature Capsule] &fYour capsule is now Active, Right click again to use!");
+        event.item.setItemDamage(1406)
+    }
+
+    if (check ==1406) {
+        var dummy = event.player.world.createEntity('customnpcs:customnpc');
+        dummy.setName("ivtoken");
+        var user = event.player.getDisplayName();
+        dummy.setPosition(event.player.x,event.player.y,event.player.z);
+    
+        var num = Math.round(Math.floor(Math.random() * Math.floor(26)))
+        var nature = ["Hardy", "Lonely", "Brave", "Adamant", "Naughty", "Bold", "Docile", "Relaxed", "Impish", "Lax", "Timid", "Hasty", "Serious", "Jolly", "Naive", "Modest", "Mild", "Quiet", "Bashful	", "Rash", "Calm", "Gentle", "Sassy", "	Careful", "Quirky"];
+
+        dummy.executeCommand("pokeedit "+user+" 1"+" nature:"+nature[num]);
+        event.player.message("&e[Nature Capsule] &fRolled into "+nature[num]+"nature");
+        event.player.setMainhandItem(event.player.world.createItem('minecraft:air', 0, 1))
+    }
+}
