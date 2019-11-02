@@ -1,0 +1,10 @@
+function init(event){
+    event.block.setModel("minecraft:redstone_block");
+}
+
+function interact(event){   
+    var player = event.player.getDisplayName()
+    var dummy = event.player.world.createEntity('customnpcs:customnpc');
+    dummy.setName("Event");
+    dummy.executeCommand("tppos "+player+" World1 -2656 73 -2190");
+}
