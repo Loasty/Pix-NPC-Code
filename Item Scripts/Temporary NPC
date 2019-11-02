@@ -1,0 +1,17 @@
+function init(event){
+    event.item.setItemDamage(2);
+    event.item.setTexture(2, 'variedcommodities:ancient_scroll');
+    event.item.setDurabilityShow(false);
+    event.item.setLore(["This item will spawn a Temporary Banker for 5 minutes", "This is a one time use item"]);
+    event.item.setCustomName("Temporary Banker Scroll");
+    event.item.setMaxStackSize(1);
+}
+
+function interact(event){
+    event.player.message("You have spawned a Temporary Banker, He will despawn in 5 minutes");
+    var c1 = event.player.world.getClone(1, "Temporary Banker");
+    c1.setPosition(event.target.x,event.target.y+2,event.target.z);
+    c1.setHome(event.target.x,event.target.y+2,event.target.z);
+    c1.spawn();
+    event.item.setStackSize(0);
+}
