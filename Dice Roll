@@ -1,0 +1,16 @@
+function init(event){
+    event.item.setItemDamage(5);
+    event.item.setTexture(5,"quark:paper_wall");
+    event.item.setDurabilityShow(false);
+    event.item.setLore(["This item will announce a number between 1 and 6 in chat", "This is a staff only item"]);
+    event.item.setCustomName("Dice");
+    event.item.setMaxStackSize(1);
+}
+
+function interact(event){
+    var dice = Math.floor((Math.random() * 6) + 1);
+    var dummy = event.player.world.createEntity('customnpcs:customnpc');
+    var user = event.player.getDisplayName();
+    dummy.setPosition(event.player.x,event.player.y,event.player.z);
+        dummy.executeCommand("evb "+user+" has rolled the dice. It's a "+dice+"!");
+}
