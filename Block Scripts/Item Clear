@@ -1,8 +1,8 @@
 function tick(event){
-    var world1 = event.API.getIWorld('2');
-    var world2 = event.API.getIWorld('3');
-    var world3 = event.API.getIWorld('4');
-    var time = (event.API.getIWorld('2').getTime() % 13200);
+    var world1 = event.API.getIWorld('minecraft:overworld');
+    var world2 = event.API.getIWorld('minecraft:the_nether');
+    var world3 = event.API.getIWorld('minecraft:the_end');
+    var time = (event.API.getIWorld('minecraft:overworld').getTime() % 13200);
     var dummy = event.block.world.createEntity('customnpcs:customnpc');
     dummy.setName("ClearLag");
     var i = 0
@@ -30,11 +30,11 @@ function tick(event){
                 item3[i].kill()
                 clearitem3++;
         }
-        dummy.executeCommand('broadcast §e[§6ClearLag§e] Removed §6'+clearitem1+'§r W1 Items, §6'+clearitem2+'§r W2 Items, §6'+clearitem3+'§r W3 Items. Emergency removal due to: Overlimit');
+        dummy.executeCommand('say §e[§6ClearLag§e] Removed §6'+clearitem1+'§r W1 Items, §6'+clearitem2+'§r W2 Items, §6'+clearitem3+'§r W3 Items. Emergency removal due to: Overlimit');
     }
     
     if(time>0&time<8){
-        dummy.executeCommand('broadcast §e[§6ClearLag§e] Ground items will be cleared in §660§r seconds.');
+        dummy.executeCommand('say §e[§6ClearLag§e] Ground items will be cleared in §660§r seconds.');
         var item1 = world1.getAllEntities(6);
         var item2 = world2.getAllEntities(6);
         var item3 = world3.getAllEntities(6);
@@ -49,9 +49,9 @@ function tick(event){
             item3[i].addTag('OD');
         }
     }else if(time>600&time<610){
-        dummy.executeCommand('broadcast §e[§6ClearLag§e] Ground items will be cleared in §630§r seconds.');
+        dummy.executeCommand('say §e[§6ClearLag§e] Ground items will be cleared in §630§r seconds.');
     }else if(time>1000&time<1010){
-        dummy.executeCommand('broadcast §e[§6ClearLag§e] Ground items will be cleared in §610§r seconds.');
+        dummy.executeCommand('say §e[§6ClearLag§e] Ground items will be cleared in §610§r seconds.');
     }else if(time>1200&time<1210){
         var clearitem1 = 0;
         var item1 = world1.getAllEntities(6);
@@ -77,7 +77,7 @@ function tick(event){
                 clearitem3++;
             }
         }
-        dummy.executeCommand('broadcast §e[§6ClearLag§e] Removed §6'+clearitem1+'§r W1 Items, §6'+clearitem2+'§r W2 Items, §6'+clearitem3+'§r W3 Items.');
+        dummy.executeCommand('say §e[§6ClearLag§e] Removed §6'+clearitem1+'§r W1 Items, §6'+clearitem2+'§r W2 Items, §6'+clearitem3+'§r W3 Items.');
     }
 }
 
@@ -98,7 +98,7 @@ function interact(event){
         //dummy.executeCommand('broadcast §e[§6 ClearLag §e]', '§6' + clearitem + '§r items have been cleared.');
         var world = event.block.getWorld();
         var spawntime = (world.getTime()% 24000);
-        var time = (event.API.getIWorld('2').getTime() % 13200);
+        var time = (event.API.getIWorld('minecraft:overworld').getTime() % 13200);
          var dummy = event.block.world.createEntity('customnpcs:customnpc');
          dummy.setName("ClearLag");
         dummy.executeCommand('admin the time is '+time);
